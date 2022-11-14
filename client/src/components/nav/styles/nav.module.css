@@ -1,0 +1,46 @@
+.contNav{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 12vh;
+    background-color: #fff;
+    border-bottom: 1px solid #d7d7d6;
+}
+
+.headerIcon{
+    padding-left: 5rem;
+}
+
+.navLabel, .navInput{
+    display: none;
+}
+
+.logo{
+    height: 2rem;
+}
+
+
+@media (max-width: 950px){
+    .contNav{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 10vh;
+    }
+
+    .headerIcon{
+        padding-left: 1.5rem;
+    }
+
+    .logo{
+        height: 2.5rem;
+    }
+
+    .navLabel{
+        display: block;
+        cursor: pointer;
+        margin-right: 1.5rem;
+    }
+
+}

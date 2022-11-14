@@ -1,0 +1,134 @@
+.contHome{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: #fff;
+    color: #333;
+}
+
+.contLog{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.contForm{
+    display: flex;
+    flex-direction: column;
+    text-align: flex-start;
+    width: 50%;
+    margin-top: 4rem;
+}
+
+.txtTitle{
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.txtSubtitle{
+    margin-top: .5rem;
+    color: #6C727F;
+    font-weight: 500;
+}
+
+.contInput{
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-evenly;
+}
+
+.contImg{
+    width: 50%;
+    background-image: url('../../../assets//pic.png');
+    background-size: cover;
+}
+
+.contImgUploaded{
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.txtImgUploaded{
+    margin-left: .5rem;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.txtForgotPassword{
+    text-align: center;
+    font-weight: 700;
+    color: #7065F0;
+}
+
+.btn{
+    background: #7065F0;
+    font-size: 16px;
+    margin-top: 1rem;
+    font-weight: 700;
+}
+
+.contLogin{
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.txtLogin{
+    color: #6C727F;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.txtSession{
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000929;
+}
+
+@media (max-width: 480px){
+    .contImg{
+        display: none;
+    }
+
+    .contLog{
+        width: 100%;
+    }
+
+    .contForm{
+        width: 90%;
+        height: 90%;
+        text-align: center;
+    }
+
+    .contInput{
+        height: 50%;
+        width: auto;
+    }
+
+    .contImgUploaded{
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 760px){
+    .contImg{
+        display: none;
+    }
+
+    .contLog{
+        width: 100%;
+    }
+
+    .contForm{
+        width: 90%;
+        text-align: center;
+    }
+
+    .contInput{
+        width: 100%;
+    }
+}
