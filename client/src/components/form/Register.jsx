@@ -43,7 +43,7 @@ const Register = () => {
         <form className={style.form}>
             <div className={style.contImgUploaded}>
                 <img src={imgUploaded} alt='img-uploaded'/> 
-                <h6 className={style.txtImgUploaded}>Subi tu foto de perfil</h6>
+                <h6 className={style.txtImgUploaded}>Subí tu foto de perfil</h6>
             </div>
             <input 
                 type='text' 

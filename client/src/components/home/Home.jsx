@@ -18,7 +18,7 @@ const Home = () => {
                     </div>
                     <div className={style.contLogin}>
                         <h6 className={style.txtLogin}>
-                            ¿Ya tenés una cuenta? <a href='/' className={style.txtSession}>Inicia sesion</a>
+                            ¿Ya tenés una cuenta? <a href='/' className={style.txtSession}>Iniciá sesión</a>
                         </h6>
                     </div>
                 </div>
