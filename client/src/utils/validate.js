@@ -7,6 +7,8 @@ export function validateEmail(email){
 export function validatePassword(pass){
     if(!pass) return true;
     const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    const reg = new RegExp('(?=.{8,})') //LENGTH
+    
     return re.test(pass)
 }
 

@@ -19,20 +19,20 @@ const Register = () => {
         password: ''
     })
 
-    useEffect(() => {validateEmail(form.email) ? setErrorEmail(false) : setErrorEmail(true)}, [form.email])
-    
-    useEffect(() => {validatePassword(form.password) ? setErrorPassword(false) : setErrorPassword(true)
-    }, [form.password])
 
-    useEffect(() => {validateString(form.name) ? setErrorName(false) : setErrorName(true)}, [form.name])
-
-    useEffect(() => {validateNumber(form.phone) ? setErrorPhone(false) : setErrorPhone(true)}, [form.phone])
 
     const handleChange = (e) => {
         setForm({
             ...form,
             [e.target.name] : e.target.value
         })
+        validateEmail(form.email) ? setErrorEmail(false) : setErrorEmail(true)
+       
+        validatePassword(form.password) ? setErrorPassword(false) : setErrorPassword(true)
+        
+        validateString(form.name) ? setErrorName(false) : setErrorName(true)
+    
+        validateNumber(form.phone) ? setErrorPhone(false) : setErrorPhone(true)
     }
 
     const toggle = () => {
@@ -91,6 +91,13 @@ const Register = () => {
                     <p className={style.labelForm}>Debe tener al menos 8 caracteres.</p> :
                     <></>                                
                 }
+                <div className={style.contLogin}>
+                    <a href='/' className={style.txtForgotPassword}>¿Olvidaste tu contraseña?</a>
+                    <button className={style.btn}>Registrarte</button>
+                    <h6 className={style.txtLogin}>
+                        ¿Ya tenés una cuenta? <a href='/' className={style.txtSession}>Iniciá sesión</a>
+                    </h6>
+                </div>
         </form>
     )
 }
