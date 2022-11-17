@@ -36,6 +36,7 @@
     opacity: 0;
     position: absolute;
     top: 20px;
+    right: 20px;
     left: 25px;
     border: 0;
     z-index: -1;
@@ -176,6 +177,10 @@
 
     .labelForm{
         font-size: 1rem;
+    }
+
+    .uploadFile{
+        width: auto;
     }
 
     .contInput{
