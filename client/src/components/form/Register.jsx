@@ -1,17 +1,50 @@
-import {useState, useEffect} from 'react';
-import {validateEmail, validatePassword, validateNumber, validateString }from '../../utils/validate.js';
+import {useState} from 'react';
 import {AiOutlineEye, AiOutlineEyeInvisible} from 'react-icons/ai'
+import {Avatar} from '@mui/material'
 import imgUploaded from '../../assets/svg/img.svg'
 
 import style from './styles/form.module.css'
 
+function validando (values) {
+    const errors = {}
+    const reString = /^[A-Za-z ]+$/
+    const reNumber = /^[0-9]+$/ 
+    const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const rePassword = /^(?=.{8,})/
+
+    if (!values.name) {
+        errors.name = 'Ingrese un nombre'
+    } else if (!reString.test(values.name)){
+        errors.name = 'Ingrese un nombre valido'
+    }
+
+    if (!values.phone){
+        errors.phone = 'Ingrese un teléfono'
+    } else if (!reNumber.test(values.phone)){
+        errors.phone = 'Ingrese un número válido'
+    }
+
+    if(!values.email){
+        errors.email = 'Ingrese un email'
+    } else if (!reEmail.test(values.email)){
+        errors.email = 'Ingrese un email válido'
+    }
+
+    if (!values.password){
+        errors.password = 'Ingrese una contraseña'
+    } else if (!rePassword.test(values.password)){
+        errors.password = 'Debe tener al menos 8 caracteres.'
+    } 
+    return errors;
+}
+
+
 const Register = () => {
 
-    const [errorEmail, setErrorEmail] = useState(null)
-    const [errorPassword, setErrorPassword] = useState(null)
-    const [errorName, setErrorName] = useState(null)
-    const [errorPhone, setErrorPhone] = useState(null)
     const [showPassword, setShowPassword] = useState(null)
+    const [formError, setFormErrors] = useState({})
+    const [file, setFile] = useState(null)
+    const [url, setUrl] = useState(null)
     const [form, setForm] = useState({
         name: '',
         phone: '',
@@ -19,20 +52,23 @@ const Register = () => {
         password: ''
     })
 
-
+    const handleChangeImg = (e) => {
+        const urlImg = URL.createObjectURL(e.target.files[0])
+        setFile(e.target.files[0])
+        setUrl(urlImg)
+    }
 
     const handleChange = (e) => {
+        e.preventDefault()
         setForm({
             ...form,
             [e.target.name] : e.target.value
         })
-        validateEmail(form.email) ? setErrorEmail(false) : setErrorEmail(true)
-       
-        validatePassword(form.password) ? setErrorPassword(false) : setErrorPassword(true)
-        
-        validateString(form.name) ? setErrorName(false) : setErrorName(true)
-    
-        validateNumber(form.phone) ? setErrorPhone(false) : setErrorPhone(true)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        setFormErrors(validando(form))
     }
 
     const toggle = () => {
@@ -40,60 +76,69 @@ const Register = () => {
     }
 
     return (
-        <form className={style.form}>
-            <div className={style.contImgUploaded}>
-                <img src={imgUploaded} alt='img-uploaded'/> 
-                <h6 className={style.txtImgUploaded}>Subí tu foto de perfil</h6>
-            </div>
-            <input 
-                type='text' 
-                name='name' 
-                placeholder='Nombre y Apellido' 
-                className={style.input} 
-                onChange={(e) => handleChange(e)}/>
-                {errorName ? 
-                    <p className={style.labelForm}>Ingrese un nombre válido</p> : <></>    
-                }
-            <input 
-                type='text' 
-                name='phone' 
-                placeholder='+54 010200 0000' 
-                className={style.input} 
-                onChange={(e) => handleChange(e)}/>
-            {
-                errorPhone ? <p className={style.labelForm}>Ingrese un número válido</p> : <></>
-            }
-            <input type='text' 
-                name='email' 
-                placeholder='hola@tuemail.com' 
-                className={style.input} 
-                onChange={(e) => handleChange(e)}/>
-            { errorEmail?
-                <p className={style.labelForm}>Ingrese un email válido.</p> : <></>
-            }
-            <div className={style.contInputPassword}>
-                <input 
-                    type={(showPassword === false) ? 'password' : 'text'}
-                    name='password' 
-                    placeholder='Ingresá tu contraseña' 
-                    className={style.input}
-                    style={{width: '100%'}}
-                    onChange={(e) => handleChange(e)}/>
-                <div className={style.passwordCheck}>
-                    {
-                        (showPassword === false) ? <AiOutlineEye onClick={toggle} className={style.iconPassword}/> :
-                        <AiOutlineEyeInvisible onClick={toggle} className={style.iconPassword}/>
-                    }
+        <form className={style.form} onSubmit={handleSubmit}>
+            <div className={style.contInputs}>
+                <div className={style.contImgUploaded}>
+                    <input type='file' name='' id='upload-photo' onChange={e => handleChangeImg(e)} className={style.uploadFile}/>
+                    <label  htmlFor='upload-photo' className={style.txtImgUploaded}>
+                        <Avatar src={file ? url : imgUploaded} alt={file ? `${file.name}` : `${imgUploaded}`} sx={{ width: 47, height: 47 }} className={style.upImg}/>
+                        Subí tu foto de perfil
+                    </label>
+                </div>
+                <div className={style.contInput}>
+                    <input 
+                        type='text' 
+                        name='name' 
+                        placeholder='Nombre y Apellido' 
+                        className={style.input} 
+                        onChange={(e) => handleChange(e)}/>
+                    {formError.name && <p className={style.labelForm}>{formError.name}</p>}
+                </div>
+                <div className={style.contInput}>
+                    <input 
+                        type='text' 
+                        name='phone' 
+                        placeholder='+54 010200 0000' 
+                        className={style.input} 
+                        onChange={(e) => handleChange(e)}/>
+                    {formError.phone && <p className={style.labelForm}>{formError.phone}</p>}
+                </div>
+                <div className={style.contInput}>
+                    <input type='text' 
+                        name='email' 
+                        placeholder='hola@tuemail.com' 
+                        className={style.input} 
+                        onChange={(e) => handleChange(e)}/>
+                    {formError.email && <p className={style.labelForm}>{formError.email}</p>}
+
+                </div>
+                <div className={style.pass}>
+                    <div className={style.contInputPassword}>
+                        <input 
+                            type={(showPassword === false) ? 'password' : 'text'}
+                            name='password' 
+                            placeholder='Ingresá tu contraseña' 
+                            className={style.input}
+                            style={{width: '100%'}}
+                            
+                            onChange={(e) => handleChange(e)}/>
+                        <div className={style.passwordCheck}>
+                            {
+                                (showPassword === false) ? <AiOutlineEye onClick={toggle} className={style.iconPassword}/> :
+                                <AiOutlineEyeInvisible onClick={toggle} className={style.iconPassword}/>
+                            }
+                        </div>
+                    </div>
+                    <div className={style.errorPassword}>
+                            {formError.password && <p className={style.labelForm}>{formError.password}</p>}
+                    </div>
+                </div>
+                <div className={style.contForgotPassword}>
+                    <a href='/' className={style.txtForgotPassword}>¿Olvidaste tu contraseña?</a>
                 </div>
             </div>
-                {
-                    errorPassword?
-                    <p className={style.labelForm}>Debe tener al menos 8 caracteres.</p> :
-                    <></>                                
-                }
                 <div className={style.contLogin}>
-                    <a href='/' className={style.txtForgotPassword}>¿Olvidaste tu contraseña?</a>
-                    <button className={style.btn}>Registrarte</button>
+                    <button className={style.btn}>Registrate</button>
                     <h6 className={style.txtLogin}>
                         ¿Ya tenés una cuenta? <a href='/' className={style.txtSession}>Iniciá sesión</a>
                     </h6>

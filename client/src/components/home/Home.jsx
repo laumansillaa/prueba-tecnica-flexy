@@ -8,11 +8,11 @@ const Home = () => {
         <div className={style.contHome}>
             <div className={style.contLog}>
                 <Nav/>
+                <div className={style.contTxtHome}>
+                    <h1 className={style.txtTitle}>¡Bienvenido!</h1>
+                    <h4 className={style.txtSubtitle}>Convertite ahora en un agente Flexy.</h4>
+                </div>
                 <div className={style.contForm}>
-                    <div className={style.contTxtHome}>
-                        <h1 className={style.txtTitle}>¡Bienvenido!</h1>
-                        <h4 className={style.txtSubtitle}>Convertite ahora en un agente Flexy.</h4>
-                    </div>
                     <Register/>
                 </div>
             </div>
