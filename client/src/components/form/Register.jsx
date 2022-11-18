@@ -8,7 +8,7 @@ import style from './styles/form.module.css'
 function validando (values) {
     const errors = {}
     const reString = /^[A-Za-z ]+$/
-    const reNumber = /^[0-9]+$/ 
+    const reNumber = /^[+54][0-9]{11,}$/ 
     const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const rePassword = /^(?=.{8,})/
 
@@ -35,27 +35,32 @@ function validando (values) {
     } else if (!rePassword.test(values.password)){
         errors.password = 'Debe tener al menos 8 caracteres.'
     } 
+
+    if (!values.image) {
+        errors.image = 'Seleccione una imagen'
+    }
     return errors;
 }
 
 
 const Register = () => {
 
-    const [showPassword, setShowPassword] = useState(null)
+    const [showPassword, setShowPassword] = useState(false)
     const [formError, setFormErrors] = useState({})
     const [file, setFile] = useState(null)
-    const [url, setUrl] = useState(null)
     const [form, setForm] = useState({
         name: '',
         phone: '',
         email: '',
-        password: ''
+        password: '',
+        image: ''
     })
+
 
     const handleChangeImg = (e) => {
         const urlImg = URL.createObjectURL(e.target.files[0])
         setFile(e.target.files[0])
-        setUrl(urlImg)
+        form.image = urlImg
     }
 
     const handleChange = (e) => {
@@ -79,11 +84,13 @@ const Register = () => {
         <form className={style.form} onSubmit={handleSubmit}>
             <div className={style.contInputs}>
                 <div className={style.contImgUploaded}>
-                    <input type='file' name='' id='upload-photo' onChange={e => handleChangeImg(e)} className={style.uploadFile}/>
+                    <input type='file' name='image' id='upload-photo' onChange={e => handleChangeImg(e)} className={style.uploadFile}/>
                     <label  htmlFor='upload-photo' className={style.txtImgUploaded}>
-                        <Avatar src={file ? url : imgUploaded} alt={file ? `${file.name}` : `${imgUploaded}`} sx={{ width: 47, height: 47 }} className={style.upImg}/>
+                        <Avatar src={file ? form.image : imgUploaded} alt={file ? `${file.name}` : `${imgUploaded}`} sx={{ width: 47, height: 47 }} className={style.upImg}/>
                         Subí tu foto de perfil
                     </label>
+                    {formError.image && <p className={style.labelForm}>{formError.image}</p>}
+
                 </div>
                 <div className={style.contInput}>
                     <input 
