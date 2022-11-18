@@ -37,7 +37,7 @@ function validando (values) {
     } 
 
     if (!values.image) {
-        errors.image = 'Seleccione una imagen'
+        errors.image = 'Seleccione una imágen'
     }
     return errors;
 }
@@ -147,7 +147,7 @@ const Register = () => {
                 <div className={style.contLogin}>
                     <button className={style.btn}>Registrate</button>
                     <h6 className={style.txtLogin}>
-                        ¿Ya tenés una cuenta? <a href='/' className={style.txtSession}>Iniciá sesión</a>
+                        ¿Ya tenés una cuenta? <a href='/' className={style.txtSession}>Inicia sesión</a>
                     </h6>
                 </div>
         </form>
