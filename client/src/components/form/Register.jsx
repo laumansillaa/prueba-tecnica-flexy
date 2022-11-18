@@ -71,9 +71,14 @@ const Register = () => {
         })
     }
 
+    
     const handleSubmit = (e) => {
         e.preventDefault()
         setFormErrors(validando(form))
+        console.log(Object.keys(formError).length)
+        if (Object.keys(formError).length === 0){
+            //Se ejecuta la acción
+        }
     }
 
     const toggle = () => {
