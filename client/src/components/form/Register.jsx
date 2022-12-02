@@ -48,6 +48,8 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [formError, setFormErrors] = useState({})
     const [file, setFile] = useState(null)
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
     const [form, setForm] = useState({
         name: '',
         phone: '',
@@ -65,17 +67,42 @@ const Register = () => {
 
     const handleChange = (e) => {
         e.preventDefault()
+        setEmailError(checkEmail(form.email))
+        setPasswordError(checkPassword(form.password))
         setForm({
             ...form,
             [e.target.name] : e.target.value
         })
     }
 
-    
+    const checkEmail = (values) => {
+        var errors = ''
+        
+        const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(!values){
+            errors = 'Ingrese un email'
+        } else if (!reEmail.test(values)){
+            errors = 'Ingrese un email válido'
+        } 
+
+        return errors
+    }
+
+    const checkPassword = (values) => {
+        var errors = ''
+        const rePassword = /^(?=.{7,})/
+        if (!values){
+            errors = 'Ingrese una contraseña'
+        } else if (!rePassword.test(values)){
+            errors = 'Debe tener al menos 8 caracteres.'
+        } 
+        return errors
+    }
+
+    console.log('EmailError', emailError)
     const handleSubmit = (e) => {
         e.preventDefault()
         setFormErrors(validando(form))
-        console.log(Object.keys(formError).length)
         if (Object.keys(formError).length === 0){
             //Se ejecuta la acción
         }
@@ -122,6 +149,9 @@ const Register = () => {
                         className={style.input} 
                         onChange={(e) => handleChange(e)}/>
                     {formError.email && <p className={style.labelForm}>{formError.email}</p>}
+                    {
+                        emailError ? <a>{emailError}</a> : null    
+                    }
 
                 </div>
                 <div className={style.pass}>
@@ -142,7 +172,10 @@ const Register = () => {
                         </div>
                     </div>
                     <div className={style.errorPassword}>
-                            {formError.password && <p className={style.labelForm}>{formError.password}</p>}
+                            {/* {formError.password && <p className={style.labelForm}>{formError.password}</p>} */}
+                            {
+                        passwordError ? <a>{passwordError}</a> : null    
+                    }
                     </div>
                 </div>
                 <div className={style.contForgotPassword}>
